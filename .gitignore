@@ -1,0 +1,11 @@
+.DS_Store
+._*
+.env
+.env.*
+!.env.example
+.arduinoIDE/
+build/
+*.hex
+*.elf
+*.o
+*.a

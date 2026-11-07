@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1390" viewBox="0 0 1600 1390">
+<defs><style>text{font-family:Arial,sans-serif;fill:#172b43} .h{font-size:28px;font-weight:700}.t{font-size:22px}.s{font-size:19px}.box{fill:#fff;stroke:#c7d1df;stroke-width:2}.sig{fill:none;stroke:#2674bd;stroke-width:4}.pwr{fill:none;stroke:#d94242;stroke-width:4}.gnd{fill:none;stroke:#33465a;stroke-width:4}</style></defs>
+<rect width="1600" height="1390" fill="#f3f6fa"/>
+<text x="60" y="65" class="h">SOCCER ROBOT / FIRST BENCH CONNECTIONS</text>
+<text x="60" y="103" class="t">UNO R3 + L298N + 2 motors + gate servo. Connect by printed labels, not physical position.</text>
+<rect x="60" y="135" width="1480" height="95" rx="12" fill="#fff1d5"/>
+<text x="80" y="173" class="t">L298N: remove ENA, ENB and 5V-EN jumpers before wiring this setup.</text>
+<text x="80" y="207" class="s">Use this power arrangement only after confirming your module has the usual removable 5V regulator jumper.</text>
+<rect x="60" y="265" width="350" height="485" rx="15" class="box"/>
+<text x="85" y="310" class="h">ARDUINO UNO R3</text>
+<text x="85" y="342" class="s">Powered through USB only</text>
+<rect x="780" y="265" width="340" height="485" rx="15" class="box"/>
+<text x="805" y="310" class="h">L298N DRIVER</text>
+<text x="805" y="342" class="s">Motor outputs are terminal pairs</text>
+<g class="t">
+<text x="335" y="395">D5</text><text x="800" y="395">ENA</text>
+<text x="335" y="445">D2</text><text x="800" y="445">IN1</text>
+<text x="335" y="495">D4</text><text x="800" y="495">IN2</text>
+<text x="335" y="555">D6</text><text x="800" y="555">ENB</text>
+<text x="335" y="605">D7</text><text x="800" y="605">IN3</text>
+<text x="335" y="655">D8</text><text x="800" y="655">IN4</text>
+<text x="335" y="715">D9</text>
+</g>
+<path d="M410 388H780 M410 438H780 M410 488H780 M410 548H780 M410 598H780 M410 648H780" class="sig"/>
+<text x="480" y="375" class="s">Left motor speed (PWM)</text>
+<text x="480" y="535" class="s">Right motor speed (PWM)</text>
+<rect x="1260" y="375" width="280" height="130" rx="15" class="box"/>
+<text x="1280" y="421" class="h">LEFT MOTOR</text><text x="1280" y="460" class="s">Two motor wires</text>
+<rect x="1260" y="560" width="280" height="130" rx="15" class="box"/>
+<text x="1280" y="606" class="h">RIGHT MOTOR</text><text x="1280" y="645" class="s">Two motor wires</text>
+<path d="M1120 425H1260 M1120 445H1260 M1120 610H1260 M1120 630H1260" class="sig"/>
+<text x="1140" y="405" class="s">OUT1/2</text><text x="1140" y="590" class="s">OUT3/4</text>
+<rect x="780" y="780" width="760" height="95" rx="15" class="box"/>
+<text x="805" y="815" class="h">GATE SERVO (SG90-type)</text>
+<text x="805" y="850" class="s">Signal: orange/yellow | power: red | ground: brown/black</text>
+<path d="M410 708H575V825H780" class="sig"/>
+<text x="80" y="807" class="s">D3 to GND: optional start button</text>
+<text x="80" y="840" class="s">No STBY pin: this driver is L298N.</text>
+<text x="60" y="935" class="h">POWER WIRING / THREE SEPARATE POSITIVE SUPPLIES</text>
+<rect x="60" y="965" width="1480" height="325" rx="15" class="box"/>
+<g class="t">
+<text x="85" y="1015">Computer USB</text><text x="810" y="1015">UNO USB socket</text>
+<text x="85" y="1070">UNO 5V pin (USB powered)</text><text x="810" y="1070">L298N 5V logic input *</text>
+<text x="85" y="1125">Motor supply + (voltage to confirm)</text><text x="810" y="1125">L298N VM / +12V terminal **</text>
+<text x="85" y="1180">Separate regulated servo supply +</text><text x="810" y="1180">Servo RED (about 5V; verify servo rating)</text>
+</g>
+<path d="M510 1008H780" class="sig"/><path d="M510 1063H780 M510 1118H780 M510 1173H780" class="pwr"/>
+<path d="M100 1240H1500" class="gnd"/>
+<text x="110" y="1272" class="s">COMMON GND: UNO GND + L298N GND + motor supply minus + servo supply minus + servo brown/black</text>
+<text x="60" y="1325" class="s">* 5V-EN jumper REMOVED. Never join an enabled regulator output to the USB-powered UNO 5V rail.</text>
+<text x="60" y="1357" class="s">** The terminal may say +12V; that is a label, not an instruction to use 12V. Confirm motor voltage first.</text>
+</svg>
