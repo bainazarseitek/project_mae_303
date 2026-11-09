@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="930" viewBox="0 0 1200 930">
+<style>text{font-family:Arial,sans-serif;fill:#183047}.h{font-size:30px;font-weight:bold}.t{font-size:24px}.s{font-size:20px}</style>
+<rect width="1200" height="930" fill="#f4f7fb"/>
+<text x="45" y="55" class="h">SENSOR TEST / ARDUINO UNO R3</text>
+<text x="45" y="95" class="t">USB powers UNO and sensors. Keep motor/servo battery disconnected.</text>
+<rect x="45" y="130" width="300" height="650" rx="15" fill="white" stroke="#c1cfdf" stroke-width="2"/>
+<text x="70" y="175" class="h">ARDUINO UNO</text>
+<g class="t"><text x="270" y="250">A0</text><text x="270" y="300">A1</text><text x="270" y="430">A2</text><text x="270" y="480">A3</text><text x="270" y="645">A4</text></g>
+<rect x="710" y="195" width="440" height="150" rx="14" fill="#e4f0ff" stroke="#2676b9" stroke-width="2"/>
+<text x="735" y="230" class="t">LEFT ULTRASONIC / HC-SR04</text>
+<text x="735" y="270" class="t">TRIG</text><text x="735" y="315" class="t">ECHO</text>
+<path d="M345 243H670V263H710 M345 293H650V308H710" fill="none" stroke="#2676b9" stroke-width="4"/>
+<rect x="710" y="375" width="440" height="150" rx="14" fill="#e4f0ff" stroke="#2676b9" stroke-width="2"/>
+<text x="735" y="410" class="t">RIGHT ULTRASONIC / HC-SR04</text>
+<text x="735" y="450" class="t">TRIG</text><text x="735" y="495" class="t">ECHO</text>
+<path d="M345 423H670V443H710 M345 473H650V488H710" fill="none" stroke="#2676b9" stroke-width="4"/>
+<rect x="710" y="580" width="440" height="150" rx="14" fill="#fff2d8" stroke="#b78b34" stroke-width="2"/>
+<text x="735" y="620" class="t">IR REFLECTIVE SENSOR *</text><text x="735" y="660" class="t">OUT / S / DO</text>
+<text x="735" y="702" class="s">Confirm its pin labels before wiring.</text>
+<path d="M345 638H670V653H710" fill="none" stroke="#b78b34" stroke-width="4" stroke-dasharray="9 7"/>
+<text x="70" y="712" class="s">D2-D9: existing motor /</text><text x="70" y="744" class="s">servo wiring stays unchanged.</text>
+<rect x="45" y="805" width="1110" height="90" rx="12" fill="white" stroke="#c1cfdf"/>
+<text x="65" y="840" class="t">UNO 5V → 5V distribution rail → VCC of each confirmed 5V sensor</text>
+<text x="65" y="878" class="t">UNO GND → GND distribution rail → GND of every sensor and driver</text>
+<text x="45" y="922" class="s">* IR disabled in test code until identified. A0-A4 act as digital pins. Match labels, not pin positions.</text>
+</svg>

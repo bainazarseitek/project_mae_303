@@ -9,6 +9,12 @@
 
 ## Files
 
+- `electronics/gate_test/gate_test.ino`: separate gate-only open/close test; motors disabled.
+- `electronics/sensor_test/sensor_test.ino`: separate ultrasonic diagnostics; motors disabled, IR optional after identification.
+- `electronics/sensors.md`: sensor wiring, tests and placement notes.
+- `electronics/sensor-wiring.png` and `.svg`: sensor connection diagram.
+- `electronics/PROGRESS.md`: confirmed bench results and outstanding hardware checks.
+
 - `electronics/robot_bench/robot_bench.ino`: motor jog tests, servo calibration, optional start button, and a timed route that stays locked until calibrated.
 - `electronics/README.md`: full setup and testing instructions.
 - `electronics/wiring.png`: connection diagram.
