@@ -1,20 +1,17 @@
+#ifndef ROBOT_DRIVER_DRV8833
+#define ROBOT_DRIVER_DRV8833 0 // 0: existing L298N; 1: recommended DRV8833
+#endif
 #include <Servo.h>
-
-// Arduino UNO R3 + common red L298N module. See wiring.svg / README.md.
-// Remove ENA, ENB and 5V-EN jumpers for the documented USB bench setup.
-const byte ENA = 5, IN1 = 2, IN2 = 4;
-const byte ENB = 6, IN3 = 7, IN4 = 8;
-const byte SERVO_PIN = 9, START_PIN = 3; // optional button: D3 to GND
+#include "RobotHardware.h"
+using namespace RobotHardware;
 
 // Flip either sign if that wheel runs backwards. PWM is not a voltage limit.
 const int LEFT_SIGN = 1, RIGHT_SIGN = 1;
-const int LEFT_PWM = 140, RIGHT_PWM = 140;
+int LEFT_PWM = 140, RIGHT_PWM = 140; // ]/[ adjust both; v prints settings.
 const unsigned long JOG_MS = 400;
 
 // Calibrate without the gate bar fitted, then fit it at a known angle.
 // Commands n / + / - set 90 degrees / increase 2 / decrease 2 degrees.
-const int OPEN_ANGLE = 90;   // replace after measuring
-const int CLOSED_ANGLE = 90; // replace after measuring
 const bool GATE_CALIBRATED = false;
 
 // Replace zeroes with measured milliseconds. TURN_MS may stay 0 (straight).
@@ -41,27 +38,12 @@ const Step route[] = {
 };
 const byte STEP_COUNT = sizeof(route) / sizeof(route[0]);
 
-void stopMotors() {
-  analogWrite(ENA, 0); analogWrite(ENB, 0);
-  digitalWrite(IN1, LOW); digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
-}
-
-void oneMotor(byte enable, byte a, byte b, int speed) {
-  speed = constrain(speed, -255, 255);
-  digitalWrite(a, speed > 0 ? HIGH : LOW);
-  digitalWrite(b, speed < 0 ? HIGH : LOW);
-  analogWrite(enable, abs(speed));
-}
-
 void drive(int left, int right) {
-  stopMotors();
-  oneMotor(ENA, IN1, IN2, left * LEFT_SIGN);
-  oneMotor(ENB, IN3, IN4, right * RIGHT_SIGN);
+  driveWheels(left * LEFT_SIGN, right * RIGHT_SIGN);
 }
 
 void setGate(int angle) {
-  gateAngle = constrain(angle, 30, 150);
+  gateAngle = constrain(angle, MIN_ANGLE, MAX_ANGLE);
   // Set pulse before attaching, rather than sweeping to an unknown endpoint.
   gate.write(gateAngle);
   if (!servoAttached) { gate.attach(SERVO_PIN); servoAttached = true; }
@@ -91,7 +73,8 @@ void applyStep() {
 
 void startRoute() {
   if (!ROUTE_CONFIGURED || !GATE_CALIBRATED || OPEN_ANGLE == CLOSED_ANGLE ||
-      OPEN_ANGLE < 30 || OPEN_ANGLE > 150 || CLOSED_ANGLE < 30 || CLOSED_ANGLE > 150 ||
+      OPEN_ANGLE < MIN_ANGLE || OPEN_ANGLE > MAX_ANGLE ||
+      CLOSED_ANGLE < MIN_ANGLE || CLOSED_ANGLE > MAX_ANGLE ||
       TO_BALL_MS == 0 || TO_GOAL_MS == 0 || PUSH_MS == 0) {
     Serial.println(F("Route locked: calibrate angles/times and set both flags true."));
     return;
@@ -100,18 +83,31 @@ void startRoute() {
   Serial.println(F("Route started. x stops drive motors."));
 }
 
+void printSpeeds() {
+  Serial.print(F("PWM left=")); Serial.print(LEFT_PWM);
+  Serial.print(F(" right=")); Serial.println(RIGHT_PWM);
+}
+
 void command(char c) {
   if (c == '\n' || c == '\r' || c == ' ') return;
   if (c == 'x') { abortMotion(); Serial.println(F("Motors stopped.")); return; }
   if (running) return; // do not accept calibration commands during a route
   if (c == 'g') { startRoute(); return; }
   if (c == 'h') {
-    Serial.println(F("1 left; 2 right; f forward; b back; l/r turn; x stop"));
+    Serial.println(F("1 left; 2 right; f forward; b back; l/r turn; x stop; [/] PWM; v speeds"));
     Serial.println(F("n servo 90; +/- servo 2 deg; o/c calibrated open/close; g route"));
     return;
   }
   abortMotion();
   switch (c) {
+    case '[': case ']':
+      LEFT_PWM = constrain(LEFT_PWM + (c == ']' ? 10 : -10), 0, 255);
+      RIGHT_PWM = constrain(RIGHT_PWM + (c == ']' ? 10 : -10), 0, 255);
+      printSpeeds();
+      return;
+    case 'v':
+      printSpeeds();
+      return;
     case '1': drive(LEFT_PWM, 0); break;
     case '2': drive(0, RIGHT_PWM); break;
     case 'f': drive(LEFT_PWM, RIGHT_PWM); break;
@@ -131,12 +127,11 @@ void command(char c) {
 }
 
 void setup() {
-  pinMode(ENA, OUTPUT); pinMode(ENB, OUTPUT);
-  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+  beginMotors();
   pinMode(START_PIN, INPUT_PULLUP);
   stopMotors();
   Serial.begin(115200);
+  printDriver();
   Serial.println(F("Ready. No movement on boot. Send h for commands."));
 }
 

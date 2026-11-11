@@ -5,6 +5,9 @@
 !.env.example
 .arduinoIDE/
 build/
+.venv/
+__pycache__/
+*.pyc
 *.hex
 *.elf
 *.o

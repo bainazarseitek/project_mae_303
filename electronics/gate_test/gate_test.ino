@@ -1,13 +1,13 @@
+#ifndef ROBOT_DRIVER_DRV8833
+#define ROBOT_DRIVER_DRV8833 0 // Match installed driver in EVERY sketch.
+#endif
 #include <Servo.h>
+#include "RobotHardware.h"
+using namespace RobotHardware;
 
 // Gate-only bench test, Arduino UNO R3. Signal: D9.
 // Separate verified servo supply, with common Arduino GND.
 // Check mechanical clearance at 0 and 90 degrees before fitting the bar.
-const int OPEN_ANGLE = 90;
-const int CLOSED_ANGLE = 0;
-const int CENTER_ANGLE = 90;
-const int MIN_ANGLE = 0, MAX_ANGLE = 90;
-const byte SERVO_PIN = 9;
 
 Servo gate;
 bool attached = false;
@@ -43,13 +43,9 @@ void command(char c) {
 }
 
 void setup() {
-  // Disable both motor channels. Remove ENA/ENB caps.
-  const byte motorPins[] = {2, 4, 5, 6, 7, 8};
-  for (byte i = 0; i < sizeof(motorPins) / sizeof(motorPins[0]); ++i) {
-    digitalWrite(motorPins[i], LOW);
-    pinMode(motorPins[i], OUTPUT);
-  }
+  beginMotors();
   Serial.begin(115200);
+  printDriver();
   Serial.println(F("Gate test ready. No movement until a command. Motors disabled."));
   Serial.println(F("Direct movement: open=90, closed=0. First test with bar OFF."));
   command('h');

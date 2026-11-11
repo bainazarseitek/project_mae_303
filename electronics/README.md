@@ -1,100 +1,48 @@
-# Soccer robot: first electronics session
+﻿# Electronics assembly and calibration
 
-Use the included `wiring.svg` (and PNG) with `robot_bench/robot_bench.ino`. This is a USB bench setup, not a finalized battery wiring plan. Switch off and disconnect power before changing wires. Test motor commands with wheels raised and test the servo without the gate bar fitted first.
+Updated 11 November 2026. [CONNECTIONS.md](CONNECTIONS.md) is the wiring reference; [POWER.md](POWER.md) explains voltage and speed. Obscured wire ends in the latest photo cannot establish actual connections: trace each wire with power disconnected.
 
-## Inventory from the photo
+## Choose the driver once
 
-| Visible item | Quantity | Identification and use |
-|---|---:|---|
-| Arduino UNO R3-style board | 1 | Main controller; USB-B socket |
-| Red L298N-style dual motor driver | 1 | Controls the two drive motors; black heatsink |
-| Yellow TT-style geared DC motors | 2 | Left and right drive; exact rated voltage/current not readable |
-| Blue SG90-style micro servo | 1 | Raises/lowers the gate; label/rating should be checked |
-| HC-SR04-style ultrasonic modules | 2 | Optional distance measurements later; not wired in this first test |
-| Bluetooth serial board | 1 | Appears HC-05/HC-06 family; exact variant unconfirmed; leave disconnected |
-| Narrow three-pin IR board | 1 | Appears reflective line sensor; exact model/pin order unconfirmed |
-| Square blue power board | 1 | Appears DC-DC related; chip, input/output and rating unconfirmed; leave disconnected |
-| Wheel assembly | At least 1 visible | Confirm a second matching wheel and correct motor shaft fit |
-| Metal caster | At least 1 partly visible | Lower right; confirm usable size and mounting |
-| Servo horns and screws | 1 bag | White parts near top |
-| Jumper wires / short red-black wires | Assorted | Signals / suitably sized power connections |
-| Bag of brackets/fasteners | 1 | Exact contents unconfirmed |
+Recommended target: [wiring.png](wiring.png), a documented 6 V motor pair, DRV8833 carrier, separate motor regulator, existing HW-140 at 5 V, and USB power for the Uno. These additions are proposed; the photographed robot still has an L298N.
 
-No identifiable robot battery, USB cable, power switch, start button, multimeter, or regulated servo supply is visible. The green/silver wrapper near the wheel appears unrelated; do not treat it as a battery. Opaque packaging cannot be inventoried.
+To retain the L298N use [wiring-l298n.png](wiring-l298n.png). It uses the same two regulated branches and existing control pins. It loses more voltage, so generally gives less speed at the same supply. Do not authorize higher voltage by assuming a fixed driver drop.
 
-## What you need on the bench
+| Item | Existing L298N | Recommended DRV8833 |
+|---|---|---|
+| Setting in every sketch | `ROBOT_DRIVER_DRV8833 0` | `ROBOT_DRIVER_DRV8833 1` |
+| Motor rail | Separate regulator, no higher than verified motor rating | Same; 6.0 V only for verified 6 V motors |
+| Logic supply | Uno 5V to driver 5V; remove 5V-EN | No separate logic 5V on specified carrier |
+| Control wires | D5/D2/D4 and D6/D7/D8 | D5/D2, D6/D7, D8 sleep; D4 unused |
 
-- USB data cable with a USB-B end for UNO, and laptop with Arduino IDE.
-- Multimeter to verify voltage and polarity.
-- Motor supply matched to the actual motors, with enough current for both starting together. Ask the lab technician for an adjustable current-limited bench supply. Read the motor/seller rating first; do not assume every yellow motor is rated the same.
-- Regulated servo supply matched to the servo rating (SG90-type is normally around 5V). A 2A-capable supply is a reasonable capacity allowance for one small servo; this is capacity, not a claim that it constantly draws 2A. Do not take servo power from the UNO or the L298N's small onboard regulator.
-- Motor wires, soldering iron, heat-shrink, screwdriver, and a terminal distribution point. Route motor and servo current through proper power wiring, rather than thin signal jumpers/breadboard rails. Solder motor terminal connections with strain relief if wires are absent.
-- For later untethered operation: suitable battery, correct charger, switch and correctly identified regulator. Battery selection remains open until motor and regulator ratings are known.
+## Assembly order
 
-## Wiring
+1. Disconnect USB and battery. Install a matching battery connector, fuse near battery positive, accessible main switch, and positive/negative distribution terminals. Coordinate fuse and wire ratings with actual startup/load current and the weakest connector; an exact fuse rating is not established.
+2. Connect switched battery power to BOTH regulator inputs. Keep positive outputs separate. With loads disconnected, meter-check HW-140 at **5.0 V** and the motor regulator at the documented motor rating or lower. Original motor maximum is unknown.
+3. Servo: red directly to 5 V distribution, brown to its ground return, orange to D9. No servo/motor current through Uno or breadboard.
+4. Driver: follow CONNECTIONS.md, including motor-power input. L298N `5V` is logic power; `VM/+12V` is motor power, not an instruction to supply 12 V.
+5. Connect one motor across each output pair. Neither lead goes directly to GND. Fit 100 nF ceramic capacitors across each motor, short power leads and strain relief.
+6. Add start button and optional sensors at reserved pins. Leave Bluetooth disconnected until identified. See POWER.md for local decoupling and motor-driver reset behavior.
+7. Programming: computer USB alone powers Uno. Mobile operation: HW-140 5 V to a verified USB power adapter/lead into the Uno USB-B socket. Physically use ONE USB source; no Y cable. Never feed external power into the Uno 5V header. Its 5V header supplies only low-current logic/sensors here.
 
-Use the printed labels on YOUR module. The diagram is functional, not a photograph of terminal positions. Confirm the usual L298N module arrangement before using it: ENA/ENB jumpers and a separate regulator jumper normally marked 5V-EN.
+## Test order
 
-1. Disconnect all power. Remove ENA and ENB jumpers so Arduino can control motor speed. Remove 5V-EN to disable the module regulator for this particular wiring arrangement. Do not remove random jumpers if markings differ.
-2. Wire UNO D5 -> ENA, D2 -> IN1, D4 -> IN2, D6 -> ENB, D7 -> IN3, D8 -> IN4.
-3. Connect the left motor to OUT1/OUT2 and right motor to OUT3/OUT4. Neither motor lead connects directly to GND or UNO.
-4. With 5V-EN removed, UNO 5V -> driver 5V logic input; UNO GND -> driver GND. UNO receives its power through USB.
-5. Motor supply positive -> driver motor supply terminal (VM/+12V); motor supply negative -> driver GND. The +12V label does NOT mean these motors require 12V. The L298 loses a noticeable amount of voltage internally; if motors are weak, measure the supply/outputs and investigate current capability instead of raising voltage blindly.
-6. Servo signal (usually orange/yellow) -> UNO D9. Servo red -> separate verified servo supply positive. Servo brown/black -> that supply negative.
-7. Join servo supply negative to the same common GND as UNO and the driver. All grounds connect; the separate positive supply rails do NOT connect together. Leave UNO VIN, barrel jack and 3.3V unused in this bench setup.
-8. Optional later: normally-open button between D3 and GND; no external resistor is needed with INPUT_PULLUP. For now use Serial Monitor.
+1. Verify disconnected-load polarity and regulator voltages using a working meter. Display-only adjustment was a provisional observation, not final validation.
+2. Select Uno/port, verify Blink and install Servo by Arduino. Set the correct driver profile in every sketch before uploading. Disable motor/gate supply while uploading.
+3. Gate: upload `gate_test`, bar removed. Send `o` (90), `c` (0), `n` (90), `+`/`-` (2 degrees). Test clearance before fitting bar. `x` cannot stop direct servo travel; remove servo power if jammed.
+4. Wheels: upload `robot_bench`, wheels raised. `1` and `2` jog individual motors for 400 ms. Correct `LEFT_SIGN`/`RIGHT_SIGN` or swap that motor's leads with power off. `x` stops wheel commands.
+5. Verify voltage under simultaneous starts, current limits, driver heat, lack of Uno resets and servo jitter. If a motor hums, check load/current limit before increasing CV. Do not hold motors stalled for current measurements.
+6. Speed: start at PWM 140. `]` raises both wheel settings by 10, `[` lowers by 10, `v` prints them. Changes apply to the next jog, and are ignored during a route. 255 is full duty, not voltage. Trim wheel speeds in code after loaded tests.
+7. Route: measure actual timings, ball collection/retention and gate behavior. Only then enable calibration flags. The example has one collection leg, not a complete three-ball routine. Recalibrate after changing supply, driver, PWM, wheels, surface or load.
 
-Never connect the unknown blue power board by guessing. Verify its marking, input/output terminals and measured output first. Do not feed battery voltage into UNO 5V or the servo. Do not power the motors from UNO.
-
-## Step-by-step session
-
-1. Leave everything disconnected except UNO USB. Install Arduino IDE from https://www.arduino.cc/en/software . Choose Arduino AVR Boards -> Arduino Uno and the board's port. Upload File -> Examples -> 01.Basics -> Blink. Confirm the onboard LED blinks. This proves cable/upload work.
-2. Open `robot_bench/robot_bench.ino`. If Servo.h is missing, install the Servo library by Arduino through Library Manager. Verify, then upload. Open Serial Monitor at 115200 baud. It should print Ready; send `h`. Booting does not start a route or command the servo.
-3. Disconnect USB, complete the L298N logic/signal wiring above, and attach ONE motor first. Verify supply polarity/voltage with a meter. Reconnect USB, then switch on motor supply. Raise the motor/wheel. Send `1`: left motor runs for 400ms and stops. Send `x` for an earlier stop. If that wheel's positive direction is backwards, switch its two motor leads with all power off, OR change LEFT_SIGN to -1 and reupload (choose one method).
-4. Switch power off, attach the second motor, restore power. Send `2`; correct RIGHT_SIGN if needed. Now `f` must turn both wheels in the robot's forward direction. Motor direction depends on how the motors are physically mounted.
-5. Switch power off before adding the servo. Keep the gate bar off. Connect signal and separate servo supply as above; check common GND. Restore power, send `n` to center at 90 degrees. Use `+` and `-` to move 2 degrees at a time (software limits 30..150). Never force the shaft. If the servo buzzes against a stop or wiring is hot, disconnect its power. `x` stops wheels but does not remove servo power or holding torque.
-6. At a known angle, switch off power and fit the servo horn/bar so its mechanical travel is free. Restore power, use small adjustments to find open and closed positions. Record the printed angles. Change OPEN_ANGLE, CLOSED_ANGLE and GATE_CALIBRATED=true in the sketch and reupload. Test `o` and `c`. If necessary, remount the horn; do not force the mechanism to reach arbitrary angles.
-7. Secure electronics to the printed chassis with insulation/standoffs, no loose terminals against metal. Fit wheels/servo. Send `f` on the floor and adjust LEFT_PWM/RIGHT_PWM separately until short runs are straight. The jog lasts only 400ms. Do not drag a tether during full field tests.
-8. Measure and enter TO_BALL_MS, TO_GOAL_MS, PUSH_MS and optionally TURN_MS. Zero turn means no turn; TURN_RIGHT chooses direction. Keep ROUTE_CONFIGURED=false until angles, wiring and times have been checked. Values are milliseconds: 1000 is one second. Time is calibrated experimentally; distance alone cannot determine it reliably.
-9. Set ROUTE_CONFIGURED=true, upload, place at repeatable start and send `g`. Sequence: open -> drive to ball -> stop -> close -> turn if needed -> drive to goal -> stop -> open -> push -> stop. Send `x` to abort drive motion. It never repeats automatically. First try the route with wheels raised. The actual drive motor power switch is the reliable way to remove motor power; Serial Monitor is a bench convenience.
-10. For untethered starts, use the optional D3 button once the mobile power arrangement is verified. Release the button after powering up, then press once. A held button does not repeat the route. Keep the USB power arrangement during bench work; do not improvise a battery connection to UNO.
-
-Timing alone can miss after slip, battery changes or contact. This sketch is for building and measuring the simple mechanism; it does not yet implement line following or obstacle avoidance. Do not present disconnected sensors as functional features.
-
-## Commands (Serial Monitor, 115200)
-
-| Command | Result |
+| Motor/route command | Action |
 |---|---|
-| h | Help |
-| 1 / 2 | Left / right motor forward, 400ms |
-| f / b | Both motors forward / back, 400ms |
-| l / r | Turn in place left / right, 400ms |
-| x | Abort route and stop wheels; servo keeps holding |
-| n | Servo to 90 degrees, bar off for first test |
-| + / - | Servo +2 / -2 degrees |
-| o / c | Open / close after calibration flag is enabled |
-| g | Run route once, only after both flags and timing are configured |
+| `1`, `2` | Left / right jog, 400 ms |
+| `f`, `b`, `l`, `r` | Forward, back, left/right rotation, 400 ms |
+| `[`, `]`, `v` | Lower / raise PWM / print values |
+| `x` | Abort wheel motion; gate retains target |
+| `n`, `+`, `-` | Gate 90 / adjust 2 degrees within 0..90 |
+| `o`, `c` | Calibrated gate endpoints only |
+| `g` | Example route, locked until both flags and timings are configured |
 
-## Troubleshooting
-
-- Upload fails: check data cable, UNO selection and port; leave Bluetooth disconnected from D0/D1.
-- No motor motion: check external motor supply, common GND, 5V logic input, ENA/ENB jumper removal, and motor terminal wiring. If a motor only hums, stop and inspect supply current limit/load rather than leaving it stalled.
-- UNO restarts when servo moves: servo power is inadequate, shared wiring drops voltage, or it is mechanically stalled. Give servo its own adequate supply and short power wiring; keep grounds common.
-- One wheel backwards: change only that wheel's SIGN or swap its two leads with power removed.
-- Servo moves but wheels change speed unexpectedly: keep motor PWM on D5/D6 as provided; the Servo library uses a timer that affects PWM on D9/D10 on UNO R3.
-- Driver gets excessively hot: stop; inspect motor load/current, supply voltage and wiring. The heatsink does not guarantee the module can deliver its advertised peak current continuously.
-
-## Documentation checked
-
-- UNO R3: https://docs.arduino.cc/hardware/uno-rev3/
-- PWM pins: https://support.arduino.cc/hc/en-us/articles/9350537961500-Use-PWM-output-with-Arduino
-- Arduino upload procedure: https://support.arduino.cc/hc/en-us/articles/4733418441116-Upload-a-sketch-in-Arduino-IDE
-- Common L298N module guide (confirm your board matches): https://handsontec.com/dataspecs/L298N%20Motor%20Driver.pdf
-- L298 chip data: https://www.st.com/resource/en/datasheet/l298.pdf
-- Genuine SG90 reference (clones may differ): https://towerpro.com.tw/product/sg90-analog/
-
-This photo cannot verify pin labels, supply ratings or component authenticity. Close-up photographs of the L298N labels, blue power module front/back, motor markings and battery label are needed to finalize the portable power plan.
-
-## Verification performed
-
-The diagram was rendered and visually checked. The sketch was compiled as C++ against mocked Arduino/Servo interfaces, and a simulation checked idle startup, locked uncalibrated route, automatic jog stop, manual stop, servo angle limits, route completion and route abort. This is not an AVR build or a hardware test. Arduino IDE/AVR tools and a connected UNO were not available here; use Verify/Upload and the bench sequence above on your computer.
+Use a suitable 3S LiPo balance charger and cell monitor/cutoff. HW-140 undervoltage behavior is not per-cell battery protection. The main switch removes battery-fed motor/gate power; USB may keep Uno logic on. Timing-only driving may miss the assignment's sensor-based requirements.

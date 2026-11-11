@@ -1,68 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1760" viewBox="0 0 1800 1760">
-<defs><style>
-text{font-family:Arial,sans-serif;fill:#193047}.title{font-size:34px;font-weight:bold}.h{font-size:27px;font-weight:bold}.t{font-size:23px}.s{font-size:21px}.box{fill:white;stroke:#c2cedb;stroke-width:2}.pwr{fill:none;stroke:#d23d42;stroke-width:5}.gnd{fill:none;stroke:#34495e;stroke-width:5}.sig{fill:none;stroke:#247ab9;stroke-width:4}.pending{fill:none;stroke:#bf7b14;stroke-width:5;stroke-dasharray:12 8}
-</style></defs>
-<rect width="1800" height="1760" fill="#f1f5f9"/>
-<text x="50" y="60" class="title">SOCCER ROBOT / UPDATED BENCH WIRING</text>
-<text x="50" y="100" class="t">9 November 2026 | Battery measured 11.4 V | UNO powered by USB | Connect by printed pin labels.</text>
-<rect x="50" y="125" width="1700" height="105" rx="12" fill="#fff0cc"/>
-<text x="75" y="165" class="h">Motor supply is NOT finalized: confirm motor voltage before connecting the LiPo to the L298N.</text>
-<text x="75" y="205" class="t">Battery is consistent with 3S LiPo: allow for 12.6 V fully charged. Never feed it directly to servo or UNO 5V.</text>
-
-<text x="50" y="280" class="h">1 / POWER: BATTERY → HW-140 → GATE SERVO</text>
-<rect x="50" y="310" width="350" height="210" rx="12" class="box"/>
-<text x="75" y="352" class="h">LiPo BATTERY</text>
-<text x="75" y="390" class="t">Measured: 11.4 V</text>
-<text x="75" y="425" class="s">Label: 2450 mAh / 30C</text>
-<text x="75" y="462" class="t">Main +</text><text x="75" y="499" class="t">Main −</text>
-<rect x="640" y="310" width="470" height="210" rx="12" class="box"/>
-<text x="665" y="352" class="h">HW-140 REGULATOR</text>
-<text x="665" y="390" class="t">CV: set output to 5.0 V</text>
-<text x="665" y="425" class="s">CC: current limit, not speed control</text>
-<text x="665" y="462" class="t">IN+</text><text x="1000" y="462" class="t">OUT+</text>
-<text x="665" y="499" class="t">IN−</text><text x="1000" y="499" class="t">OUT−</text>
-<path d="M400 455H640" class="pwr"/><path d="M400 492H640" class="gnd"/>
-<rect x="1390" y="310" width="360" height="210" rx="12" class="box"/>
-<text x="1415" y="352" class="h">BLUE GATE SERVO</text>
-<text x="1415" y="390" class="t">Open 90° / close 0°</text>
-<text x="1415" y="425" class="s">Verify mechanical clearance</text>
-<text x="1415" y="462" class="t">Red: +5 V</text>
-<text x="1415" y="499" class="t">Brown/black: GND</text>
-<path d="M1110 455H1390" class="pwr"/><path d="M1110 492H1390" class="gnd"/>
-<text x="75" y="565" class="t">Servo orange/yellow signal → UNO D9. USB powers the UNO; servo power comes from the regulator.</text>
-<text x="75" y="605" class="t">Set and meter-check OUT+/OUT− at 5.0 V with servo disconnected. Power off before attaching wires.</text>
-<rect x="50" y="630" width="1700" height="100" rx="12" fill="#e2eaf2"/>
-<text x="75" y="670" class="h">COMMON GROUND</text>
-<text x="75" y="708" class="t">Battery − / HW-140 IN− + HW-140 OUT− + servo ground + UNO GND + L298N GND + sensor grounds.</text>
-
-<text x="50" y="790" class="h">2 / MOTORS: ARDUINO SIGNALS → L298N → TWO YELLOW WHEEL MOTORS</text>
-<rect x="50" y="820" width="1700" height="365" rx="12" class="box"/>
-<text x="80" y="865" class="h">ARDUINO UNO</text><text x="690" y="865" class="h">L298N DRIVER</text><text x="1250" y="865" class="h">MOTOR CONNECTIONS</text>
-<g class="t">
-<text x="80" y="910">D5 / left speed PWM</text><text x="690" y="910">ENA</text>
-<text x="80" y="950">D2 / left direction</text><text x="690" y="950">IN1</text>
-<text x="80" y="990">D4 / left direction</text><text x="690" y="990">IN2</text>
-<text x="80" y="1030">D6 / right speed PWM</text><text x="690" y="1030">ENB</text>
-<text x="80" y="1070">D7 / right direction</text><text x="690" y="1070">IN3</text>
-<text x="80" y="1110">D8 / right direction</text><text x="690" y="1110">IN4</text>
-<text x="1250" y="925">OUT1 + OUT2 → left motor</text>
-<text x="1250" y="975">OUT3 + OUT4 → right motor</text>
-<text x="1250" y="1035">Neither motor wire goes</text><text x="1250" y="1070">directly to UNO or GND.</text>
-</g>
-<path d="M410 902H650 M410 942H650 M410 982H650 M410 1022H650 M410 1062H650 M410 1102H650" class="sig"/>
-<text x="80" y="1155" class="s">Steering: different left/right PWM values curve the robot. Opposite directions rotate it in place.</text>
-<rect x="50" y="1205" width="1700" height="175" rx="12" fill="#fff0cc"/>
-<text x="75" y="1245" class="h">L298N POWER / JUMPERS</text>
-<text x="75" y="1285" class="t">Remove ENA and ENB caps for PWM control. Remove 5V-EN for this USB-powered logic arrangement.</text>
-<text x="75" y="1325" class="t">UNO 5V → L298N 5V logic input. UNO GND → L298N GND. Do not join regulator OUT+ to UNO 5V.</text>
-<text x="75" y="1360" class="s">Verified motor supply + → VM / +12V terminal; supply − → common GND. The +12V label does not set motor voltage.</text>
-
-<text x="50" y="1435" class="h">3 / OPTIONAL SENSORS: USB-POWERED 5 V + COMMON GND</text>
-<rect x="50" y="1460" width="1700" height="180" rx="12" class="box"/>
-<text x="75" y="1502" class="t">Left ultrasonic: TRIG → A0, ECHO → A1. Right ultrasonic: TRIG → A2, ECHO → A3.</text>
-<text x="75" y="1542" class="t">IR line sensor OUT → A4. Confirmed on your field: white = 1, background = 0.</text>
-<text x="75" y="1582" class="t">Color sensor: S0 → D10, S1 → D11, S2 → D12, S3 → D13, OUT → A5; LED pin left unconnected.</text>
-<text x="75" y="1620" class="s">Sensor readings require the appropriate sketch. gate_test disables motors; it does not read sensors.</text>
-<text x="50" y="1685" class="s">Red = positive power | Dark = ground | Blue = control signals. Use proper power wiring, not breadboard rails, for motors/servo.</text>
-<text x="50" y="1723" class="s">Regulator powers the servo only in this diagram. Disconnect the old servo supply. Battery → motor-driver connection remains pending.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="2190" viewBox="0 0 1800 2190">
+<style>text{font-family:Arial,sans-serif;fill:#17324d}.title{font-size:34px;font-weight:bold}.h{font-size:27px;font-weight:bold}.t{font-size:23px}.s{font-size:21px}</style>
+<rect width="1800" height="2190" fill="#f2f6fa"/>
+<text x="50" y="60" class="title">SOCCER ROBOT / RECOMMENDED DRV8833 BUILD</text>
+<text x="50" y="103" class="t">11 November 2026 | Functional schematic: connect by printed terminal names, not board position.</text>
+<rect x="50" y="130" width="1700" height="110" rx="12" fill="#fff0cd" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="172" class="h">Additional parts required: motor regulator, DRV8833 carrier and verified motors.</text>
+<text x="75" y="212" class="t">6.0 V is permitted ONLY for confirmed 6 V motors. Do not connect raw 3S battery to motor driver or servo.</text>
+<text x="50" y="295" class="h">1 / BATTERY AND TWO INDEPENDENT REGULATED OUTPUTS</text>
+<rect x="50" y="325" width="360" height="200" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="367" class="s">TERANTY LiPo / 3S</text>
+<text x="75" y="407" class="s">11.1 V / 2450 mAh / 30C</text>
+<text x="75" y="447" class="s">Measured 11.4 V</text>
+<text x="75" y="487" class="s">Up to 12.6 V charged</text>
+<rect x="610" y="325" width="500" height="200" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="635" y="367" class="h">FUSE → MAIN SWITCH → BAT+</text>
+<text x="635" y="410" class="t">Battery + enters fuse first.</text>
+<text x="635" y="450" class="t">Battery − → GND terminal.</text>
+<text x="635" y="490" class="s">Fuse/wires selected for actual load.</text>
+<path d="M410 388H610" fill="none" stroke="#d23d42" stroke-width="5"/>
+<rect x="1310" y="325" width="440" height="200" rx="12" fill="#e3ebf2" stroke="#bfcedd" stroke-width="2"/>
+<text x="1335" y="367" class="h">BATTERY MANAGEMENT</text>
+<text x="1335" y="410" class="t">3S cell monitor / cutoff</text>
+<text x="1335" y="450" class="t">3S LiPo balance charger</text>
+<text x="1335" y="490" class="s">Pack limits; no charging via robot</text>
+<rect x="50" y="580" width="650" height="195" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="622" class="h">HW-140 / EXISTING</text>
+<text x="75" y="664" class="t">IN+ ← BAT+     IN− ← GND</text>
+<text x="75" y="706" class="t">OUT+ → 5V terminal; set CV to 5.0 V</text>
+<text x="75" y="748" class="s">OUT− → GND; CC is current limit</text>
+<rect x="1030" y="580" width="720" height="195" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="1055" y="622" class="h">MOTOR BUCK / ADD THIS PART</text>
+<text x="1055" y="664" class="t">IN+ ← BAT+     IN− ← GND</text>
+<text x="1055" y="706" class="t">OUT+ → MOTOR+; no higher than motor rating</text>
+<text x="1055" y="748" class="s">OUT− → GND; input rated above 12.6 V</text>
+<path d="M860 525V550H375V580 M860 550H1390V580" fill="none" stroke="#d23d42" stroke-width="5"/>
+<rect x="50" y="815" width="1700" height="140" rx="12" fill="#e3ebf2" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="857" class="h">POWER RETURNS / COMMON GROUND</text>
+<text x="75" y="897" class="t">Battery −, both regulator IN−/OUT−, driver GND, servo brown, Uno GND and sensor GND share a terminal.</text>
+<text x="75" y="932" class="s">Run motor/servo returns directly to power ground. Keep 5V OUT+, MOTOR+ and BAT+ separate.</text>
+<text x="50" y="1010" class="h">2 / EVERY LOAD HAS ITS OWN POWER CONNECTION</text>
+<rect x="50" y="1035" width="1700" height="348" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="1074" class="h">DEVICE</text>
+<text x="595" y="1074" class="h">POWER</text>
+<text x="1115" y="1074" class="h">SIGNAL / CONDITION</text>
+<text x="75" y="1123" class="s">Gate servo</text>
+<text x="595" y="1123" class="s">Red → 5V; brown → GND</text>
+<text x="1115" y="1123" class="s">Orange/yellow → Uno D9</text>
+<text x="75" y="1171" class="s">Wheel driver</text>
+<text x="595" y="1171" class="s">MOTOR+ → VIN / VM</text>
+<text x="1115" y="1171" class="s">GND → power GND; never motor via Uno</text>
+<text x="75" y="1219" class="s">Driver logic</text>
+<text x="595" y="1219" class="s">No external logic 5V</text>
+<text x="1115" y="1219" class="s">No logic VCC on specified carrier</text>
+<text x="75" y="1267" class="s">Uno / programming</text>
+<text x="595" y="1267" class="s">Computer USB → USB-B</text>
+<text x="1115" y="1267" class="s">Mobile power cable disconnected</text>
+<text x="75" y="1315" class="s">Uno / mobile</text>
+<text x="595" y="1315" class="s">5V → USB power adapter</text>
+<text x="1115" y="1315" class="s">Adapter → USB-B; computer disconnected</text>
+<text x="75" y="1363" class="s">Sensors</text>
+<text x="595" y="1363" class="s">Uno 5V → VCC; GND → GND</text>
+<text x="1115" y="1363" class="s">Low-current rail; see sensor-wiring.png</text>
+<text x="50" y="1445" class="h">3 / UNO SIGNALS → DRV8833</text>
+<rect x="50" y="1470" width="1700" height="300" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="1509" class="h">UNO PIN</text>
+<text x="595" y="1509" class="h">DRIVER PIN</text>
+<text x="1115" y="1509" class="h">PURPOSE</text>
+<text x="75" y="1558" class="s">D5</text>
+<text x="595" y="1558" class="s">AIN1</text>
+<text x="1115" y="1558" class="s">Left motor PWM</text>
+<text x="75" y="1606" class="s">D2</text>
+<text x="595" y="1606" class="s">AIN2</text>
+<text x="1115" y="1606" class="s">Left direction / second input</text>
+<text x="75" y="1654" class="s">D6</text>
+<text x="595" y="1654" class="s">BIN1</text>
+<text x="1115" y="1654" class="s">Right motor PWM</text>
+<text x="75" y="1702" class="s">D7</text>
+<text x="595" y="1702" class="s">BIN2</text>
+<text x="1115" y="1702" class="s">Right direction / second input</text>
+<text x="75" y="1750" class="s">D8</text>
+<text x="595" y="1750" class="s">SLP / nSLEEP</text>
+<text x="1115" y="1750" class="s">LOW while stopped; D4 is unused</text>
+<text x="75" y="1815" class="t">AOUT1/AOUT2 → left motor; BOUT1/BOUT2 → right motor.</text>
+<text x="75" y="1852" class="s">Each motor has TWO driver leads; neither lead goes directly to ground. Fit 100 nF across each motor.</text>
+<text x="75" y="1889" class="s">Firmware: ROBOT_DRIVER_DRV8833 = 1 in EVERY uploaded sketch. Default firmware is L298N.</text>
+<text x="75" y="1926" class="s">Gate: open=90°, close=0°; D3-to-GND start button. Wheel PWM D5/D6 controls speed, not regulator CV.</text>
+<text x="50" y="2085" class="s">Verify voltage/polarity under load. See CONNECTIONS.md for all sensor wires and POWER.md for current limits.</text>
+<text x="50" y="2123" class="s">L298N fallback: add 10k pull-downs ENA/ENB → GND. DRV8833: nSLEEP LOW disables outputs.</text>
+<text x="50" y="2161" class="s">No external power into Uno 5V header. No USB Y cable. No motor/servo power through breadboard. GND is common.</text>
 </svg>

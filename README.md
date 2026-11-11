@@ -1,40 +1,32 @@
-# MAE 303 Soccer Robot
+﻿# MAE 303 soccer robot
 
-## Start here
+An Arduino Uno robot with two wheel motors, a servo-operated ball gate, and optional sensor diagnostics. The competition plan uses measured movement times; the existing route is a locked example, not a calibrated three-ball routine.
 
-1. Read [electronics/README.md](electronics/README.md) for the inventory, wiring and test sequence.
-2. Open [electronics/wiring.png](electronics/wiring.png) beside your workspace.
-3. Open [electronics/robot_bench/robot_bench.ino](electronics/robot_bench/robot_bench.ino) in Arduino IDE. Keep the sketch inside its matching `robot_bench` folder.
-4. Start with USB-only Blink, then test one motor, the other motor, and finally the servo with the gate bar removed.
+## Build references
 
-## Files
+1. [Electronics setup](electronics/README.md): assembly and testing.
+2. [Inventory](electronics/INVENTORY.md): owned parts and additions needed.
+3. [Power and speed](electronics/POWER.md): voltage limits and driver selection.
+4. [Complete connections](electronics/CONNECTIONS.md): all power and signal wires.
+5. [Recommended schematic](electronics/wiring.png), [existing L298N schematic](electronics/wiring-l298n.png), [sensor schematic](electronics/sensor-wiring.png).
+6. [Progress](electronics/PROGRESS.md) and [review](electronics/REVIEW.md): reported results and remaining checks.
 
-- `electronics/gate_test/gate_test.ino`: separate gate-only open/close test; motors disabled.
-- `electronics/sensor_test/sensor_test.ino`: separate ultrasonic diagnostics; motors disabled, IR optional after identification.
-- `electronics/sensors.md`: sensor wiring, tests and placement notes.
-- `electronics/sensor-wiring.png` and `.svg`: sensor connection diagram.
-- `electronics/PROGRESS.md`: confirmed bench results and outstanding hardware checks.
+## Hardware decision
 
-- `electronics/robot_bench/robot_bench.ino`: motor jog tests, servo calibration, optional start button, and a timed route that stays locked until calibrated.
-- `electronics/README.md`: full setup and testing instructions.
-- `electronics/wiring.png`: connection diagram.
-- `electronics/wiring.svg`: editable diagram source.
-- `electronics/soccer-electronics.zip`: portable copy of the electronics package.
-- `references/Project_Soccer Robot_Fall 2026.pdf`: assignment brief.
-- `references/parts-photo.jpg`: supplied photo of the available components.
+The TERANTY lithium-polymer battery is labelled **11.1 V, 2450 mAh, 30C**, previously measured at 11.4 V. Design for **12.6 V fully charged**. Keep the owned HW-140 at **5.0 V** for the gate/logic branch; wheel power belongs on an independent regulated rail.
 
-## Current status
+For higher speed, the recommended target replaces the lossy L298N with a **DRV8833 carrier** and adds a **motor regulator**. Use **6.0 V only with confirmed 6 V-rated motors**, or replace the unidentified motors with a documented matching pair. Their maximum cannot be established from photographs. The complete L298N fallback retains existing hardware; firmware defaults to that profile.
 
-Hardware: UNO R3-style board, L298N-style driver, two geared motors, SG90-style servo, optional sensors/Bluetooth. The replacement LiPo measured 11.4V; the HW-140 regulator was adjusted to a reported 5.01V for the servo. Exact motor ratings and final motor supply remain unconfirmed.
+## Sketches
 
-The diagram describes a USB-powered UNO bench setup with regulated servo power. All three sketches compiled for Arduino Uno; selected hardware results are recorded in electronics/PROGRESS.md. Gate-only endpoints are now 90/0 degrees with direct movement, but physical clearance and route timings remain unverified.
+| Folder | Purpose | Wheel motors | Gate |
+|---|---|---|---|
+| `electronics/robot_bench` | Jogs, speed calibration, locked timed-route example | By command only | 90/0 degree targets, calibration lock |
+| `electronics/gate_test` | Gate calibration | Disabled | Direct open=90, close=0 |
+| `electronics/sensor_test` | Ultrasonic and IR diagnostics | Disabled | No commands |
 
-The code currently implements timed movement, not line following or obstacle avoidance. Confirm the assessed navigation requirements before treating it as the competition program.
+All use Serial Monitor at **115200 baud**. Uploading replaces the previous sketch. Sensors do not influence the motor/route sketch. Assignment requirements for line following and obstacle avoidance remain unimplemented.
 
-## Latest bench update (11 November 2026)
+[RobotHardware.h](electronics/firmware/RobotHardware.h) is the shared hardware source. Run `python tools/prepare_electronics.py` after editing it to refresh the copies in each standalone sketch folder, diagrams and wire list. Each folder opens directly in Arduino IDE; install Servo by Arduino for gate/motor sketches. `ROBOT_DRIVER_DRV8833` defaults to `0`; set it to `1` at the top of **every sketch you upload** after fitting the recommended driver.
 
-See [electronics/PROGRESS.md](electronics/PROGRESS.md) for confirmed results and open work. The IR sensor reports white=1/background=0. The new battery measured 11.4V, and the HW-140 regulator was adjusted to a reported 5.01V for the servo. Motor voltage ratings and final motor-power wiring remain unresolved.
-
-The gate-only sketch now uses direct open=90/close=0 commands. These settings are not yet integrated into `robot_bench`, and physical gate clearance still needs checking. All three sketches have compiled for Arduino Uno. The team plans a timed motor/servo route; final route timings and sequence are not implemented. Sensor-based line following and obstacle avoidance remain absent.
-
-Use the current files rather than the older `soccer-electronics.zip` snapshot. The wiring diagram shows the servo power arrangement; read the progress notes before selecting a motor supply.
+`references/Project_Soccer Robot_Fall 2026.pdf` is the assignment brief; `references/parts-photo.jpg` is the original photo. Rebuild the portable electronics ZIP using `python tools/prepare_electronics.py --package`. Development scripts require only Python's standard library.

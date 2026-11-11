@@ -1,0 +1,68 @@
+﻿profile,from,to,condition
+both,LiPo main +,Fuse IN,Raw battery; up to 12.6 V
+both,Fuse OUT,Main switch IN,DC-rated fuse/switch/wires
+both,Main switch OUT,BAT+ terminal,Switched battery positive
+both,LiPo main -,GND terminal,Power ground
+both,BAT+,HW-140 IN+,Existing 5 V regulator
+both,GND,HW-140 IN-,Power return
+both,BAT+,Motor regulator IN+,New independent regulator
+both,GND,Motor regulator IN-,Power return
+both,HW-140 OUT+,5V terminal,Set and verify 5.0 V
+both,HW-140 OUT-,GND terminal,Common ground
+both,Motor regulator OUT+,MOTOR+ terminal,<=verified motor rating
+both,Motor regulator OUT-,GND terminal,Common ground
+both,5V terminal,Servo red,Direct servo power branch
+both,GND terminal,Servo brown/black,Direct return; not via Uno
+both,GND terminal,Uno GND,Signal reference
+both,5V terminal,Mobile USB adapter +5V,Only mobile USB source
+both,GND terminal,Mobile USB adapter GND,Only mobile USB source
+both,Mobile adapter USB,Uno USB-B,Unplug computer USB
+both,Computer USB,Uno USB-B,Programming; mobile USB unplugged
+drv8833,Uno D5,DRV8833 AIN1,Left motor PWM
+drv8833,Uno D2,DRV8833 AIN2,Left direction / second input
+drv8833,Uno D6,DRV8833 BIN1,Right motor PWM
+drv8833,Uno D7,DRV8833 BIN2,Right direction / second input
+drv8833,Uno D8,DRV8833 SLP / nSLEEP,LOW while stopped; D4 is unused
+drv8833,AOUT1,Left motor lead 1,No direct ground connection
+drv8833,AOUT2,Left motor lead 2,No direct ground connection
+drv8833,BOUT1,Right motor lead 1,No direct ground connection
+drv8833,BOUT2,Right motor lead 2,No direct ground connection
+drv8833,MOTOR+,VIN/VM,Regulated; <=motor rating
+drv8833,Power GND,Driver GND,Direct power return
+l298n,Uno D5,L298N ENA,"Left PWM; remove cap, add 10k to GND"
+l298n,Uno D2,L298N IN1,Left direction
+l298n,Uno D4,L298N IN2,Left direction
+l298n,Uno D6,L298N ENB,"Right PWM; remove cap, add 10k to GND"
+l298n,Uno D7,L298N IN3,Right direction
+l298n,Uno D8,L298N IN4,Right direction
+l298n,OUT1,Left motor lead 1,No direct ground connection
+l298n,OUT2,Left motor lead 2,No direct ground connection
+l298n,OUT3,Right motor lead 1,No direct ground connection
+l298n,OUT4,Right motor lead 2,No direct ground connection
+l298n,MOTOR+,VM/+12V,Regulated; <=motor rating
+l298n,Power GND,Driver GND,Direct power return
+l298n,Uno 5V,Driver 5V,5V-EN removed
+l298n,ENA,GND via 10k,Enable caps removed; reset pull-down
+l298n,ENB,GND via 10k,Enable caps removed; reset pull-down
+both,Uno D9,Servo orange/yellow,Signal only
+both,Uno D3,Start button contact 1,INPUT_PULLUP
+both,GND,Start button contact 2,Normally open
+both,Uno 5V,Left ultrasonic VCC,Low-current logic power
+both,GND,Left ultrasonic GND,Common reference
+both,Uno 5V,Right ultrasonic VCC,Low-current logic power
+both,GND,Right ultrasonic GND,Common reference
+both,Uno 5V,IR line sensor VCC,Low-current logic power
+both,GND,IR line sensor GND,Common reference
+both,Uno 5V,Color sensor VCC,Low-current logic power
+both,GND,Color sensor GND,Common reference
+both,Left ultrasonic TRIG,Uno A0,Optional; see sensor status
+both,Left ultrasonic ECHO,Uno A1,Optional; see sensor status
+both,Right ultrasonic TRIG,Uno A2,Optional; see sensor status
+both,Right ultrasonic ECHO,Uno A3,Optional; see sensor status
+both,IR line sensor OUT,Uno A4,Optional; see sensor status
+both,Color sensor S0,Uno D10,Optional; see sensor status
+both,Color sensor S1,Uno D11,Optional; see sensor status
+both,Color sensor S2,Uno D12,Optional; see sensor status
+both,Color sensor S3,Uno D13,Optional; see sensor status
+both,Color sensor OUT,Uno A5,Optional; see sensor status
+both,Color LED,Unconnected,Control not verified

@@ -1,12 +1,13 @@
-#include <Arduino.h>
+#ifndef ROBOT_DRIVER_DRV8833
+#define ROBOT_DRIVER_DRV8833 0 // Match installed driver in EVERY sketch.
+#endif
+#include "RobotHardware.h"
+using namespace RobotHardware;
 
 // UNO R3. Diagnostic sketch only: motors disabled, no servo commands.
 // Test with the MOTOR/SERVO BATTERY DISCONNECTED; UNO and sensors use USB.
-const byte LEFT_TRIG = A0, LEFT_ECHO = A1;
-const byte RIGHT_TRIG = A2, RIGHT_ECHO = A3;
-const byte IR_PIN = A4;
-// Confirm the IR module's voltage and VCC/GND/OUT labels before wiring it.
-const bool ENABLE_IR = false;
+// Confirmed on the team's tested field: IR_WHITE == HIGH.
+const bool ENABLE_IR = true;
 const unsigned long PING_INTERVAL_MS = 75; // one transmitter at a time
 const unsigned long ECHO_TIMEOUT_US = 25000;
 unsigned long lastPing = 0;
@@ -24,16 +25,13 @@ float readDistance(byte trig, byte echo) {
 }
 
 void setup() {
-  // Keep both L298N channels off. ENA/ENB caps must be removed.
-  const byte motorPins[] = {2, 4, 5, 6, 7, 8};
-  for (byte i = 0; i < sizeof(motorPins) / sizeof(motorPins[0]); ++i) {
-    digitalWrite(motorPins[i], LOW); pinMode(motorPins[i], OUTPUT);
-  }
+  beginMotors();
   digitalWrite(LEFT_TRIG, LOW); digitalWrite(RIGHT_TRIG, LOW);
   pinMode(LEFT_TRIG, OUTPUT); pinMode(LEFT_ECHO, INPUT);
   pinMode(RIGHT_TRIG, OUTPUT); pinMode(RIGHT_ECHO, INPUT);
   if (ENABLE_IR) pinMode(IR_PIN, INPUT_PULLUP);
   Serial.begin(115200);
+  printDriver();
   Serial.println(F("Sensor test. Motors OFF. Battery disconnected."));
   Serial.println(F("NA = no valid echo; it does NOT mean no obstacle."));
 }

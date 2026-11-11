@@ -1,26 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="930" viewBox="0 0 1200 930">
-<style>text{font-family:Arial,sans-serif;fill:#183047}.h{font-size:30px;font-weight:bold}.t{font-size:24px}.s{font-size:20px}</style>
-<rect width="1200" height="930" fill="#f4f7fb"/>
-<text x="45" y="55" class="h">SENSOR TEST / ARDUINO UNO R3</text>
-<text x="45" y="95" class="t">USB powers UNO and sensors. Keep motor/servo battery disconnected.</text>
-<rect x="45" y="130" width="300" height="650" rx="15" fill="white" stroke="#c1cfdf" stroke-width="2"/>
-<text x="70" y="175" class="h">ARDUINO UNO</text>
-<g class="t"><text x="270" y="250">A0</text><text x="270" y="300">A1</text><text x="270" y="430">A2</text><text x="270" y="480">A3</text><text x="270" y="645">A4</text></g>
-<rect x="710" y="195" width="440" height="150" rx="14" fill="#e4f0ff" stroke="#2676b9" stroke-width="2"/>
-<text x="735" y="230" class="t">LEFT ULTRASONIC / HC-SR04</text>
-<text x="735" y="270" class="t">TRIG</text><text x="735" y="315" class="t">ECHO</text>
-<path d="M345 243H670V263H710 M345 293H650V308H710" fill="none" stroke="#2676b9" stroke-width="4"/>
-<rect x="710" y="375" width="440" height="150" rx="14" fill="#e4f0ff" stroke="#2676b9" stroke-width="2"/>
-<text x="735" y="410" class="t">RIGHT ULTRASONIC / HC-SR04</text>
-<text x="735" y="450" class="t">TRIG</text><text x="735" y="495" class="t">ECHO</text>
-<path d="M345 423H670V443H710 M345 473H650V488H710" fill="none" stroke="#2676b9" stroke-width="4"/>
-<rect x="710" y="580" width="440" height="150" rx="14" fill="#fff2d8" stroke="#b78b34" stroke-width="2"/>
-<text x="735" y="620" class="t">IR REFLECTIVE SENSOR *</text><text x="735" y="660" class="t">OUT / S / DO</text>
-<text x="735" y="702" class="s">Confirm its pin labels before wiring.</text>
-<path d="M345 638H670V653H710" fill="none" stroke="#b78b34" stroke-width="4" stroke-dasharray="9 7"/>
-<text x="70" y="712" class="s">D2-D9: existing motor /</text><text x="70" y="744" class="s">servo wiring stays unchanged.</text>
-<rect x="45" y="805" width="1110" height="90" rx="12" fill="white" stroke="#c1cfdf"/>
-<text x="65" y="840" class="t">UNO 5V → 5V distribution rail → VCC of each confirmed 5V sensor</text>
-<text x="65" y="878" class="t">UNO GND → GND distribution rail → GND of every sensor and driver</text>
-<text x="45" y="922" class="s">* IR disabled in test code until identified. A0-A4 act as digital pins. Match labels, not pin positions.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1210" viewBox="0 0 1800 1210">
+<style>text{font-family:Arial,sans-serif;fill:#17324d}.title{font-size:34px;font-weight:bold}.h{font-size:27px;font-weight:bold}.t{font-size:23px}.s{font-size:21px}</style>
+<rect width="1800" height="1210" fill="#f2f6fa"/>
+<text x="50" y="60" class="title">SOCCER ROBOT / OPTIONAL SENSORS AND GATE SIGNAL</text>
+<text x="50" y="105" class="t">Shared map for both driver profiles. Signals use Uno 5 V logic; follow printed module labels.</text>
+<rect x="50" y="135" width="1700" height="105" rx="12" fill="#e3ebf2" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="177" class="h">SENSOR POWER: Uno 5V → all identified sensor VCC; Uno GND → all sensor GND.</text>
+<text x="75" y="215" class="s">Use a low-current distribution rail. Servo red comes from HW-140 5 V DIRECTLY, not this sensor rail.</text>
+<rect x="50" y="280" width="1700" height="348" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="319" class="h">DEVICE</text>
+<text x="575" y="319" class="h">SIGNAL PIN</text>
+<text x="975" y="319" class="h">UNO PIN / RESULT</text>
+<text x="75" y="368" class="s">Left ultrasonic</text>
+<text x="575" y="368" class="s">TRIG / ECHO</text>
+<text x="975" y="368" class="s">A0 / A1</text>
+<text x="75" y="416" class="s">Right ultrasonic</text>
+<text x="575" y="416" class="s">TRIG / ECHO</text>
+<text x="975" y="416" class="s">A2 / A3</text>
+<text x="75" y="464" class="s">IR line sensor</text>
+<text x="575" y="464" class="s">OUT / S / DO</text>
+<text x="975" y="464" class="s">A4; white=1, background=0</text>
+<text x="75" y="512" class="s">Color sensor</text>
+<text x="575" y="512" class="s">S0 / S1</text>
+<text x="975" y="512" class="s">D10 / D11</text>
+<text x="75" y="560" class="s">Color sensor</text>
+<text x="575" y="560" class="s">S2 / S3</text>
+<text x="975" y="560" class="s">D12 / D13</text>
+<text x="75" y="608" class="s">Color sensor</text>
+<text x="575" y="608" class="s">OUT</text>
+<text x="975" y="608" class="s">A5; no color-reading code yet</text>
+<rect x="50" y="700" width="1700" height="380" rx="12" fill="#fff" stroke="#bfcedd" stroke-width="2"/>
+<text x="75" y="745" class="s">Gate orange/yellow → D9; gate red → HW-140 5 V; gate brown → power ground.</text>
+<text x="75" y="790" class="s">Normally-open start button → D3 and GND; no external resistor (INPUT_PULLUP).</text>
+<text x="75" y="835" class="s">Color LED control left unconnected pending module confirmation; color-reading code is not implemented.</text>
+<text x="75" y="880" class="s">Bluetooth and unidentified square converter: leave disconnected until their ratings/pins are identified.</text>
+<text x="75" y="925" class="s">D0/D1 reserved for Serial/upload. A4/A5 occupied: do not also connect I2C peripherals there.</text>
+<text x="75" y="970" class="s">sensor_test: battery motor/gate branch OFF; computer USB powers Uno/sensors. IR enabled by default.</text>
+<text x="75" y="1015" class="s">Ultrasonic NA = no valid echo, not a clear path. Color and ultrasonic hardware remain unverified.</text>
+<text x="75" y="1060" class="s">robot_bench uses motor/gate timing only. Connected sensors do not provide navigation or obstacle avoidance.</text>
+<text x="50" y="1140" class="s">Gate motion and wheel PWM are independent. Servo Timer1 does not affect wheel PWM on D5/D6.</text>
+<text x="50" y="1180" class="s">Read CONNECTIONS.md and POWER.md before assembling. Both driver profiles preserve these sensor assignments.</text>
 </svg>
