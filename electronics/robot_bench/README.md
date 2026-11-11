@@ -2,6 +2,8 @@
 
 This is the CURRENT `robot_bench` behavior. It replaces the earlier 400ms jog/route example. It uses no servo, sensors, start button or autonomous route. Keep those devices disconnected for this diagnostic. The previous one-channel `motor_continuous_test` is a different sketch with a temporary pin swap; do not use its wiring here.
 
+Current unresolved hardware fault and pending temporary ENA-cap test: [channel A investigation](../L298N_CHANNEL_A_DEBUG.md). The cap-on test is an exception to the normal wiring below and requires disconnecting D5 first. Do not confuse ENA with the separate 5V-EN regulator jumper.
+
 Open `robot_bench.ino` together with its accompanying `RobotHardware.h` in Arduino IDE. Profile `ROBOT_DRIVER_DRV8833=0` is the default and matches the owned L298N. The shared header still implements the optional DRV8833 profile, but this reset-test diagram is L298N only. A successful compile or command message does not prove that motor VM is connected or adequate under load.
 
 ## Power for THIS bench test only

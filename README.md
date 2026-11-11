@@ -4,6 +4,8 @@ An Arduino Uno robot with two wheel motors, a servo-operated ball gate, and opti
 
 Start here for the current two-motor-only bench session: [instructions](electronics/robot_bench/README.md) and [exact wiring picture](electronics/robot_bench/wiring-two-motors.png). This isolated L298N test uses the existing HW-140 temporarily for motor power, with gate/sensors disconnected. The full build below is a later two-regulator architecture.
 
+Current unresolved fault: [L298N channel A diagnostic log](electronics/L298N_CHANNEL_A_DEBUG.md), including reported voltages and the next pending test. No hardware repair has been confirmed.
+
 ## Build references
 
 1. [Electronics setup](electronics/README.md): assembly and testing.

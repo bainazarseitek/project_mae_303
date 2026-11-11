@@ -2,10 +2,12 @@
 
 ## Reported hardware results
 
+Latest investigation: [channel A diagnostic log](L298N_CHANNEL_A_DEBUG.md). OUT1/OUT2 reportedly measures about 0.16V, versus about 4.8V across OUT3/OUT4. D5 measured about 5V with its driver connection removed and motor battery OFF/USB connected. An earlier ENA value was about 1.5V; later the team reported one ENA header pin at 0V and the other at 5V. Exact ENA pin identity and separate IN1/IN2 readings remain unresolved. The proposed ENA-cap test (D5 disconnected first; separate 5V-EN still removed) is PENDING, not a reported fix.
+
 - Uno upload/Serial Monitor work at 115200 baud.
 - IR module works: white=1, background=0. Height and field surface must remain consistent.
 - One wheel motor ran on L298N OUT1/OUT2; another was intermittent/hummed through the driver but turned directly from a battery. Root cause not proven.
-- Later troubleshooting established driver VM/+12V was not connected. Logic/control alone cannot power the wheels. Successful operation after completing motor-power wiring has not been reported.
+- Earlier troubleshooting established driver VM/+12V was not connected. In the reset session, the team later confirmed HW-140 OUT+->VM, OUT-->driver GND and UNO GND->driver GND. Output B is now reported near 4.8V; A remains near 0.16V. Loaded VM/logic readings and reliable both-motor operation remain unconfirmed.
 - Servo responded to earlier tests. New 90/0 degree endpoints, bar clearance and ball retention/release remain unverified.
 - Ultrasonic readings remain NA/unresolved. Color module identified visually; no color-readout result.
 - Battery changed from the old 4.8 V AA pack to user-specified 11.1 V, 2450 mAh, 30C TERANTY LiPo, measured at 11.4 V.
@@ -17,7 +19,7 @@ Start-over update: the team requested an isolated two-motor continuous test. Cur
 
 For THIS test only, with servo/sensors disconnected, the HW-140 temporarily supplies driver VM at the initial 5.0V test setting (or lower if actual motor rating requires it). UNO remains USB-powered and provides L298N logic 5V with 5V-EN removed. The initial setting does not establish original motor voltage ratings or guarantee startup through L298N. See [current test instructions](robot_bench/README.md).
 
-Both output pairs are under investigation: the team reports working motors but failure at OUT1/OUT2 across motor swaps, and a later reading of 0.16V across that pair during a temporary continuous test. Supply/logic readings and root cause are still unconfirmed. Do not record either channel as repaired yet.
+Channel A remains under investigation: the team reports motors can run but failure stays at OUT1/OUT2 across motor swaps and a driver replacement. Output A is about 0.16V versus output B about 4.8V during the reset test. Supply/logic readings, ENA pin identity and root cause remain unconfirmed. No repair is established. See the detailed diagnostic log for the latest evidence and pending cap-on/D5-disconnected comparison.
 
 Older single-regulator/shared motor-and-servo suggestions were provisional tests. They are superseded by [CONNECTIONS.md](CONNECTIONS.md): fixed 5 V gate/logic branch plus independent motor regulator. Do not increase servo voltage for wheel speed.
 
