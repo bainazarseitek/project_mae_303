@@ -1,52 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1390" viewBox="0 0 1600 1390">
-<defs><style>text{font-family:Arial,sans-serif;fill:#172b43} .h{font-size:28px;font-weight:700}.t{font-size:22px}.s{font-size:19px}.box{fill:#fff;stroke:#c7d1df;stroke-width:2}.sig{fill:none;stroke:#2674bd;stroke-width:4}.pwr{fill:none;stroke:#d94242;stroke-width:4}.gnd{fill:none;stroke:#33465a;stroke-width:4}</style></defs>
-<rect width="1600" height="1390" fill="#f3f6fa"/>
-<text x="60" y="65" class="h">SOCCER ROBOT / FIRST BENCH CONNECTIONS</text>
-<text x="60" y="103" class="t">UNO R3 + L298N + 2 motors + gate servo. Connect by printed labels, not physical position.</text>
-<rect x="60" y="135" width="1480" height="95" rx="12" fill="#fff1d5"/>
-<text x="80" y="173" class="t">L298N: remove ENA, ENB and 5V-EN jumpers before wiring this setup.</text>
-<text x="80" y="207" class="s">Use this power arrangement only after confirming your module has the usual removable 5V regulator jumper.</text>
-<rect x="60" y="265" width="350" height="485" rx="15" class="box"/>
-<text x="85" y="310" class="h">ARDUINO UNO R3</text>
-<text x="85" y="342" class="s">Powered through USB only</text>
-<rect x="780" y="265" width="340" height="485" rx="15" class="box"/>
-<text x="805" y="310" class="h">L298N DRIVER</text>
-<text x="805" y="342" class="s">Motor outputs are terminal pairs</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1760" viewBox="0 0 1800 1760">
+<defs><style>
+text{font-family:Arial,sans-serif;fill:#193047}.title{font-size:34px;font-weight:bold}.h{font-size:27px;font-weight:bold}.t{font-size:23px}.s{font-size:21px}.box{fill:white;stroke:#c2cedb;stroke-width:2}.pwr{fill:none;stroke:#d23d42;stroke-width:5}.gnd{fill:none;stroke:#34495e;stroke-width:5}.sig{fill:none;stroke:#247ab9;stroke-width:4}.pending{fill:none;stroke:#bf7b14;stroke-width:5;stroke-dasharray:12 8}
+</style></defs>
+<rect width="1800" height="1760" fill="#f1f5f9"/>
+<text x="50" y="60" class="title">SOCCER ROBOT / UPDATED BENCH WIRING</text>
+<text x="50" y="100" class="t">9 November 2026 | Battery measured 11.4 V | UNO powered by USB | Connect by printed pin labels.</text>
+<rect x="50" y="125" width="1700" height="105" rx="12" fill="#fff0cc"/>
+<text x="75" y="165" class="h">Motor supply is NOT finalized: confirm motor voltage before connecting the LiPo to the L298N.</text>
+<text x="75" y="205" class="t">Battery is consistent with 3S LiPo: allow for 12.6 V fully charged. Never feed it directly to servo or UNO 5V.</text>
+
+<text x="50" y="280" class="h">1 / POWER: BATTERY → HW-140 → GATE SERVO</text>
+<rect x="50" y="310" width="350" height="210" rx="12" class="box"/>
+<text x="75" y="352" class="h">LiPo BATTERY</text>
+<text x="75" y="390" class="t">Measured: 11.4 V</text>
+<text x="75" y="425" class="s">Label: 2450 mAh / 30C</text>
+<text x="75" y="462" class="t">Main +</text><text x="75" y="499" class="t">Main −</text>
+<rect x="640" y="310" width="470" height="210" rx="12" class="box"/>
+<text x="665" y="352" class="h">HW-140 REGULATOR</text>
+<text x="665" y="390" class="t">CV: set output to 5.0 V</text>
+<text x="665" y="425" class="s">CC: current limit, not speed control</text>
+<text x="665" y="462" class="t">IN+</text><text x="1000" y="462" class="t">OUT+</text>
+<text x="665" y="499" class="t">IN−</text><text x="1000" y="499" class="t">OUT−</text>
+<path d="M400 455H640" class="pwr"/><path d="M400 492H640" class="gnd"/>
+<rect x="1390" y="310" width="360" height="210" rx="12" class="box"/>
+<text x="1415" y="352" class="h">BLUE GATE SERVO</text>
+<text x="1415" y="390" class="t">Open 90° / close 0°</text>
+<text x="1415" y="425" class="s">Verify mechanical clearance</text>
+<text x="1415" y="462" class="t">Red: +5 V</text>
+<text x="1415" y="499" class="t">Brown/black: GND</text>
+<path d="M1110 455H1390" class="pwr"/><path d="M1110 492H1390" class="gnd"/>
+<text x="75" y="565" class="t">Servo orange/yellow signal → UNO D9. USB powers the UNO; servo power comes from the regulator.</text>
+<text x="75" y="605" class="t">Set and meter-check OUT+/OUT− at 5.0 V with servo disconnected. Power off before attaching wires.</text>
+<rect x="50" y="630" width="1700" height="100" rx="12" fill="#e2eaf2"/>
+<text x="75" y="670" class="h">COMMON GROUND</text>
+<text x="75" y="708" class="t">Battery − / HW-140 IN− + HW-140 OUT− + servo ground + UNO GND + L298N GND + sensor grounds.</text>
+
+<text x="50" y="790" class="h">2 / MOTORS: ARDUINO SIGNALS → L298N → TWO YELLOW WHEEL MOTORS</text>
+<rect x="50" y="820" width="1700" height="365" rx="12" class="box"/>
+<text x="80" y="865" class="h">ARDUINO UNO</text><text x="690" y="865" class="h">L298N DRIVER</text><text x="1250" y="865" class="h">MOTOR CONNECTIONS</text>
 <g class="t">
-<text x="335" y="395">D5</text><text x="800" y="395">ENA</text>
-<text x="335" y="445">D2</text><text x="800" y="445">IN1</text>
-<text x="335" y="495">D4</text><text x="800" y="495">IN2</text>
-<text x="335" y="555">D6</text><text x="800" y="555">ENB</text>
-<text x="335" y="605">D7</text><text x="800" y="605">IN3</text>
-<text x="335" y="655">D8</text><text x="800" y="655">IN4</text>
-<text x="335" y="715">D9</text>
+<text x="80" y="910">D5 / left speed PWM</text><text x="690" y="910">ENA</text>
+<text x="80" y="950">D2 / left direction</text><text x="690" y="950">IN1</text>
+<text x="80" y="990">D4 / left direction</text><text x="690" y="990">IN2</text>
+<text x="80" y="1030">D6 / right speed PWM</text><text x="690" y="1030">ENB</text>
+<text x="80" y="1070">D7 / right direction</text><text x="690" y="1070">IN3</text>
+<text x="80" y="1110">D8 / right direction</text><text x="690" y="1110">IN4</text>
+<text x="1250" y="925">OUT1 + OUT2 → left motor</text>
+<text x="1250" y="975">OUT3 + OUT4 → right motor</text>
+<text x="1250" y="1035">Neither motor wire goes</text><text x="1250" y="1070">directly to UNO or GND.</text>
 </g>
-<path d="M410 388H780 M410 438H780 M410 488H780 M410 548H780 M410 598H780 M410 648H780" class="sig"/>
-<text x="480" y="375" class="s">Left motor speed (PWM)</text>
-<text x="480" y="535" class="s">Right motor speed (PWM)</text>
-<rect x="1260" y="375" width="280" height="130" rx="15" class="box"/>
-<text x="1280" y="421" class="h">LEFT MOTOR</text><text x="1280" y="460" class="s">Two motor wires</text>
-<rect x="1260" y="560" width="280" height="130" rx="15" class="box"/>
-<text x="1280" y="606" class="h">RIGHT MOTOR</text><text x="1280" y="645" class="s">Two motor wires</text>
-<path d="M1120 425H1260 M1120 445H1260 M1120 610H1260 M1120 630H1260" class="sig"/>
-<text x="1140" y="405" class="s">OUT1/2</text><text x="1140" y="590" class="s">OUT3/4</text>
-<rect x="780" y="780" width="760" height="95" rx="15" class="box"/>
-<text x="805" y="815" class="h">GATE SERVO (SG90-type)</text>
-<text x="805" y="850" class="s">Signal: orange/yellow | power: red | ground: brown/black</text>
-<path d="M410 708H575V825H780" class="sig"/>
-<text x="80" y="807" class="s">D3 to GND: optional start button</text>
-<text x="80" y="840" class="s">No STBY pin: this driver is L298N.</text>
-<text x="60" y="935" class="h">POWER WIRING / THREE SEPARATE POSITIVE SUPPLIES</text>
-<rect x="60" y="965" width="1480" height="325" rx="15" class="box"/>
-<g class="t">
-<text x="85" y="1015">Computer USB</text><text x="810" y="1015">UNO USB socket</text>
-<text x="85" y="1070">UNO 5V pin (USB powered)</text><text x="810" y="1070">L298N 5V logic input *</text>
-<text x="85" y="1125">Motor supply + (voltage to confirm)</text><text x="810" y="1125">L298N VM / +12V terminal **</text>
-<text x="85" y="1180">Separate regulated servo supply +</text><text x="810" y="1180">Servo RED (about 5V; verify servo rating)</text>
-</g>
-<path d="M510 1008H780" class="sig"/><path d="M510 1063H780 M510 1118H780 M510 1173H780" class="pwr"/>
-<path d="M100 1240H1500" class="gnd"/>
-<text x="110" y="1272" class="s">COMMON GND: UNO GND + L298N GND + motor supply minus + servo supply minus + servo brown/black</text>
-<text x="60" y="1325" class="s">* 5V-EN jumper REMOVED. Never join an enabled regulator output to the USB-powered UNO 5V rail.</text>
-<text x="60" y="1357" class="s">** The terminal may say +12V; that is a label, not an instruction to use 12V. Confirm motor voltage first.</text>
+<path d="M410 902H650 M410 942H650 M410 982H650 M410 1022H650 M410 1062H650 M410 1102H650" class="sig"/>
+<text x="80" y="1155" class="s">Steering: different left/right PWM values curve the robot. Opposite directions rotate it in place.</text>
+<rect x="50" y="1205" width="1700" height="175" rx="12" fill="#fff0cc"/>
+<text x="75" y="1245" class="h">L298N POWER / JUMPERS</text>
+<text x="75" y="1285" class="t">Remove ENA and ENB caps for PWM control. Remove 5V-EN for this USB-powered logic arrangement.</text>
+<text x="75" y="1325" class="t">UNO 5V → L298N 5V logic input. UNO GND → L298N GND. Do not join regulator OUT+ to UNO 5V.</text>
+<text x="75" y="1360" class="s">Verified motor supply + → VM / +12V terminal; supply − → common GND. The +12V label does not set motor voltage.</text>
+
+<text x="50" y="1435" class="h">3 / OPTIONAL SENSORS: USB-POWERED 5 V + COMMON GND</text>
+<rect x="50" y="1460" width="1700" height="180" rx="12" class="box"/>
+<text x="75" y="1502" class="t">Left ultrasonic: TRIG → A0, ECHO → A1. Right ultrasonic: TRIG → A2, ECHO → A3.</text>
+<text x="75" y="1542" class="t">IR line sensor OUT → A4. Confirmed on your field: white = 1, background = 0.</text>
+<text x="75" y="1582" class="t">Color sensor: S0 → D10, S1 → D11, S2 → D12, S3 → D13, OUT → A5; LED pin left unconnected.</text>
+<text x="75" y="1620" class="s">Sensor readings require the appropriate sketch. gate_test disables motors; it does not read sensors.</text>
+<text x="50" y="1685" class="s">Red = positive power | Dark = ground | Blue = control signals. Use proper power wiring, not breadboard rails, for motors/servo.</text>
+<text x="50" y="1723" class="s">Regulator powers the servo only in this diagram. Disconnect the old servo supply. Battery → motor-driver connection remains pending.</text>
 </svg>

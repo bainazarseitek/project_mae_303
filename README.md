@@ -25,8 +25,16 @@
 
 ## Current status
 
-Hardware: UNO R3-style board, L298N-style driver, two geared motors, SG90-style servo, optional sensors/Bluetooth. Exact motor ratings, battery and blue power converter remain unconfirmed. Confirm these before finalizing battery wiring.
+Hardware: UNO R3-style board, L298N-style driver, two geared motors, SG90-style servo, optional sensors/Bluetooth. The replacement LiPo measured 11.4V; the HW-140 regulator was adjusted to a reported 5.01V for the servo. Exact motor ratings and final motor supply remain unconfirmed.
 
-The diagram describes a USB-powered bench setup. The controller's software logic passed mock C++ simulation checks; actual Arduino compilation, upload and hardware tests remain to be done. Gate angles and route durations are deliberately not calibrated yet.
+The diagram describes a USB-powered UNO bench setup with regulated servo power. All three sketches compiled for Arduino Uno; selected hardware results are recorded in electronics/PROGRESS.md. Gate-only endpoints are now 90/0 degrees with direct movement, but physical clearance and route timings remain unverified.
 
 The code currently implements timed movement, not line following or obstacle avoidance. Confirm the assessed navigation requirements before treating it as the competition program.
+
+## Latest bench update (11 November 2026)
+
+See [electronics/PROGRESS.md](electronics/PROGRESS.md) for confirmed results and open work. The IR sensor reports white=1/background=0. The new battery measured 11.4V, and the HW-140 regulator was adjusted to a reported 5.01V for the servo. Motor voltage ratings and final motor-power wiring remain unresolved.
+
+The gate-only sketch now uses direct open=90/close=0 commands. These settings are not yet integrated into `robot_bench`, and physical gate clearance still needs checking. All three sketches have compiled for Arduino Uno. The team plans a timed motor/servo route; final route timings and sequence are not implemented. Sensor-based line following and obstacle avoidance remain absent.
+
+Use the current files rather than the older `soccer-electronics.zip` snapshot. The wiring diagram shows the servo power arrangement; read the progress notes before selecting a motor supply.

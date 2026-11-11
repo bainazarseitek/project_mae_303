@@ -60,3 +60,7 @@ Sources:
 - Reflective sensor example (not proof of the exact photographed model): https://www.sunrom.com/m/4594
 
 Verification: C++ mock checks cover timing, alternating triggers, invalid-echo handling and disabled motor pins. No connected-hardware test or AVR build was performed here; verify/upload in Arduino IDE and test against the actual sensors.
+
+## Bench update (11 November 2026)
+
+The team confirmed IR output white=1 and background=0. Enable `ENABLE_IR` in the sensor sketch to read it; the tracked default remains false. The color module photographed later is TCS3200/TCS230-style, with proposed S0/S1/S2/S3 on D10/D11/D12/D13 and OUT on A5; it has no test implementation yet. Ultrasonic readings remain unresolved. See `PROGRESS.md` for power changes and the planned timed route.
