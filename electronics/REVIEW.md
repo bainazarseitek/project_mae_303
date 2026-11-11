@@ -1,6 +1,12 @@
 ﻿# Refactor review - 11 November 2026
 
-## Findings addressed
+## Current start-over test update
+
+The later two-motor reset supersedes the earlier robot_bench jog/route behavior described in the historical record below. `robot_bench` now has `r` to run BOTH continuously at full duty, `x` to stop, `v` status and `h` help, with stopped startup and no servo/route. It uses the normal driver pin map. [Bench instructions](robot_bench/README.md) and [bench wiring](robot_bench/wiring-two-motors.png) describe the isolated HW-140-fed motor test. The optional full-build schematics remain for later assembly.
+
+New behavior is exercised by production-code mock tests in `tests/bench/robot_bench_checks.cpp` for both driver profiles; mock tests are not a hardware voltage/current/motion check. See the work handoff for whether an actual AVR build was possible in this environment.
+
+## Findings addressed (earlier full-build refactor)
 
 | Finding | Resolution |
 |---|---|

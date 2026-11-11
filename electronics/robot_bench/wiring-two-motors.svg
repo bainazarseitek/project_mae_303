@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1670" viewBox="0 0 1400 1670">
+<style>text{font-family:Arial,sans-serif;fill:#183047}.h{font-size:30px;font-weight:bold}.t{font-size:24px}.s{font-size:20px}.box{fill:white;stroke:#bbcada;stroke-width:2}.red{stroke:#d34242;stroke-width:5;fill:none}.black{stroke:#344455;stroke-width:5;fill:none}.blue{stroke:#2378be;stroke-width:4;fill:none}</style>
+<rect width="1400" height="1670" fill="#f3f6fa"/>
+<text x="45" y="55" class="h">START OVER / TWO MOTORS + L298N + UNO</text>
+<text x="45" y="95" class="t">Normal wiring. No servo or sensors. Send r to run BOTH; x to stop BOTH.</text>
+<text x="45" y="135" class="s">Disconnect USB and battery before changing wires. Match terminal labels, not drawing positions.</text>
+<rect x="45" y="165" width="305" height="220" rx="14" class="box"/>
+<text x="65" y="202" class="t">TERANTY 3S LiPo</text>
+<text x="65" y="239" class="s">11.1V nominal / 12.6V full</text>
+<text x="65" y="282" class="t">+ via fuse and switch</text>
+<text x="65" y="345" class="t">− battery return</text>
+<rect x="540" y="165" width="330" height="220" rx="14" class="box"/>
+<text x="560" y="202" class="t">HW-140 REGULATOR</text>
+<text x="560" y="240" class="s">Display: OUT in volts</text>
+<text x="560" y="282" class="t">IN+</text><text x="775" y="282" class="t">OUT+</text>
+<text x="560" y="345" class="t">IN−</text><text x="775" y="345" class="t">OUT−</text>
+<text x="560" y="372" class="s">Initial test output: 5.0V *</text>
+<path d="M350 275H540 M870 275H1070" class="red"/>
+<path d="M350 338H540 M870 338H1070" class="black"/>
+<text x="375" y="257" class="s">RAW BATTERY</text><text x="895" y="257" class="s">REGULATED</text>
+<rect x="1070" y="165" width="285" height="220" rx="14" class="box"/>
+<text x="1090" y="202" class="t">L298N POWER</text>
+<text x="1090" y="240" class="s">Same driver as below</text>
+<text x="1090" y="282" class="t">VM / +12V</text>
+<text x="1090" y="345" class="t">GND</text>
+<rect x="45" y="420" width="1310" height="235" rx="14" fill="#fff0d0" stroke="#d5b365"/>
+<text x="65" y="460" class="h">LOGIC POWER / USB</text>
+<text x="65" y="505" class="t">Computer USB → Arduino USB-B socket</text>
+<text x="65" y="550" class="t">Arduino 5V → L298N 5V logic terminal; remove the separate 5V-EN cap</text>
+<text x="65" y="595" class="t">Arduino GND → L298N GND (also joined to HW-140 OUT−)</text>
+<text x="65" y="632" class="s">Keep battery + / regulator IN+ / regulator OUT+ away from Arduino 5V. Motor current does not pass through UNO.</text>
+<rect x="45" y="700" width="350" height="470" rx="14" class="box"/>
+<text x="65" y="746" class="h">ARDUINO UNO</text>
+<rect x="850" y="700" width="505" height="470" rx="14" class="box"/>
+<text x="875" y="746" class="h">L298N CONTROL PINS</text>
+<text x="875" y="786" class="s">Remove ENA and ENB caps</text>
+<g class="t">
+<text x="325" y="835">D5</text><text x="875" y="835">ENA signal</text>
+<text x="325" y="890">D2</text><text x="875" y="890">IN1</text>
+<text x="325" y="945">D4</text><text x="875" y="945">IN2</text>
+<text x="325" y="1010">D6</text><text x="875" y="1010">ENB signal</text>
+<text x="325" y="1065">D7</text><text x="875" y="1065">IN3</text>
+<text x="325" y="1120">D8</text><text x="875" y="1120">IN4</text>
+</g>
+<path d="M395 828H850 M395 883H850 M395 938H850 M395 1003H850 M395 1058H850 M395 1113H850" class="blue"/>
+<text x="455" y="812" class="s">Motor A / OUT1 and OUT2</text>
+<text x="455" y="987" class="s">Motor B / OUT3 and OUT4</text>
+<path d="M945 1170V1240 M975 1170V1240 M1210 1170V1240 M1240 1170V1240" class="blue"/>
+<text x="870" y="1155" class="s">OUT1 / OUT2</text><text x="1130" y="1155" class="s">OUT3 / OUT4</text>
+<rect x="850" y="1240" width="235" height="95" rx="14" class="box"/>
+<text x="875" y="1278" class="t">MOTOR A</text><text x="875" y="1314" class="s">Two motor wires</text>
+<rect x="1120" y="1240" width="235" height="95" rx="14" class="box"/>
+<text x="1145" y="1278" class="t">MOTOR B</text><text x="1145" y="1314" class="s">Two motor wires</text>
+<text x="45" y="1220" class="s">No temporary D6→ENA channel swap.</text>
+<text x="45" y="1258" class="s">Retain 10k pull-downs ENA/ENB → GND</text>
+<text x="45" y="1296" class="s">for reset behavior. Raise both wheels.</text>
+<rect x="45" y="1370" width="1310" height="165" rx="14" class="box"/>
+<text x="65" y="1410" class="h">MULTIMETER / DC VOLTS ONLY</text>
+<text x="65" y="1455" class="t">Check OUT+ to OUT− ≈ 5.0V first. Then check OUT1↔OUT2 and OUT3↔OUT4.</text>
+<text x="65" y="1498" class="t">Black lead: COM. Red lead: V/Ω, NOT A/mA. Attach/move probes with power OFF.</text>
+<text x="45" y="1577" class="s">* Servo disconnected: HW-140 is temporarily the motor supply. Do not exceed verified motor voltage.</text>
+<text x="45" y="1613" class="s">5.0V is a conservative starting test, not a verified motor rating. Driver voltage loss may prevent starting.</text>
+<text x="45" y="1649" class="s">No automatic timeout. If either motor hums/stalls, stop/disconnect motor power immediately. No raw LiPo to VM.</text>
+</svg>

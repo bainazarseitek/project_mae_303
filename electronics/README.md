@@ -2,6 +2,8 @@
 
 Updated 11 November 2026. [CONNECTIONS.md](CONNECTIONS.md) is the wiring reference; [POWER.md](POWER.md) explains voltage and speed. Obscured wire ends in the latest photo cannot establish actual connections: trace each wire with power disconnected.
 
+Current start-over bench session: [two motors only](robot_bench/README.md), with [its own wiring picture](robot_bench/wiring-two-motors.png). Use this before the full assembly below. Gate and sensors are disconnected; the existing HW-140 temporarily regulates motor power and UNO stays on computer USB.
+
 ## Choose the driver once
 
 Recommended target: [wiring.png](wiring.png), a documented 6 V motor pair, DRV8833 carrier, separate motor regulator, existing HW-140 at 5 V, and USB power for the Uno. These additions are proposed; the photographed robot still has an L298N.
@@ -30,19 +32,18 @@ To retain the L298N use [wiring-l298n.png](wiring-l298n.png). It uses the same t
 1. Verify disconnected-load polarity and regulator voltages using a working meter. Display-only adjustment was a provisional observation, not final validation.
 2. Select Uno/port, verify Blink and install Servo by Arduino. Set the correct driver profile in every sketch before uploading. Disable motor/gate supply while uploading.
 3. Gate: upload `gate_test`, bar removed. Send `o` (90), `c` (0), `n` (90), `+`/`-` (2 degrees). Test clearance before fitting bar. `x` cannot stop direct servo travel; remove servo power if jammed.
-4. Wheels: upload `robot_bench`, wheels raised. `1` and `2` jog individual motors for 400 ms. Correct `LEFT_SIGN`/`RIGHT_SIGN` or swap that motor's leads with power off. `x` stops wheel commands.
+4. Wheels: upload current `robot_bench`, wheels raised, using its normal wiring table. `r` runs BOTH motors continuously at full duty; `x` stops both. There are no `1`/`2` jog commands. Correct `LEFT_SIGN`/`RIGHT_SIGN` or swap that motor's leads with power off. Gate/sensors remain disconnected for this start-over test.
 5. Verify voltage under simultaneous starts, current limits, driver heat, lack of Uno resets and servo jitter. If a motor hums, check load/current limit before increasing CV. Do not hold motors stalled for current measurements.
-6. Speed: start at PWM 140. `]` raises both wheel settings by 10, `[` lowers by 10, `v` prints them. Changes apply to the next jog, and are ignored during a route. 255 is full duty, not voltage. Trim wheel speeds in code after loaded tests.
-7. Route: measure actual timings, ball collection/retention and gate behavior. Only then enable calibration flags. The example has one collection leg, not a complete three-ball routine. Recalibrate after changing supply, driver, PWM, wheels, surface or load.
+6. The current test uses duty 255/255 to avoid PWM averaging during voltage measurements. This is full duty, not voltage regulation. `v` prints running/stopped status. Stop any stalled/humming motor immediately; do not leave it powered merely to take a reading.
+7. Autonomous route: not present in the current motor-only sketch. First establish reliable motor power and physical gate behavior, then measure actual route timings with the final supply, load, wheels and surface before implementing the competition sequence.
 
-| Motor/route command | Action |
+| Current robot_bench command | Action |
 |---|---|
-| `1`, `2` | Left / right jog, 400 ms |
-| `f`, `b`, `l`, `r` | Forward, back, left/right rotation, 400 ms |
-| `[`, `]`, `v` | Lower / raise PWM / print values |
-| `x` | Abort wheel motion; gate retains target |
-| `n`, `+`, `-` | Gate 90 / adjust 2 degrees within 0..90 |
-| `o`, `c` | Calibrated gate endpoints only |
-| `g` | Example route, locked until both flags and timings are configured |
+| `r` | Run BOTH motors continuously, full duty, no timeout |
+| `x` | Stop BOTH; wheels may coast |
+| `v` | Report running/stopped status |
+| `h` | Help |
+
+Old jog, speed adjustment, gate and route commands are not accepted by this start-over sketch. Unknown characters stop both motors. CR/LF/spaces are ignored. Use the separate gate sketch for gate actions.
 
 Use a suitable 3S LiPo balance charger and cell monitor/cutoff. HW-140 undervoltage behavior is not per-cell battery protection. The main switch removes battery-fed motor/gate power; USB may keep Uno logic on. Timing-only driving may miss the assignment's sensor-based requirements.

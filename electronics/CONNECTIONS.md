@@ -1,6 +1,8 @@
 ﻿# Complete connection schedule
 
-This replaces the earlier changing bench suggestions. Use the recommended DRV8833 plan when the extra parts are installed; use the separately labelled L298N fallback while retaining that driver. Never combine their control tables. Pin names describe electrical connections, not physical left/right terminal order. Diagram symbols represent terminals, not a photo layout.
+For the CURRENT isolated two-motor test, use [robot_bench/README.md](robot_bench/README.md) and [its wiring picture](robot_bench/wiring-two-motors.png). It keeps the normal L298N signal map below, but temporarily uses the existing HW-140 for motor power with the servo/sensors disconnected. The following two-regulator schedule is the later complete build, not a prerequisite for that isolated bench test.
+
+Use the recommended DRV8833 plan when the extra parts are installed; use the separately labelled L298N fallback while retaining that driver. Never combine their control tables. Pin names describe electrical connections, not physical left/right terminal order. Diagram symbols represent terminals, not a photo layout.
 
 ## Power distribution: both plans
 
